@@ -5,10 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import solucao.models.Pessoa;
+import solucao.models.utils.PessoaEnderecos;
 import solucao.repositories.PessoaRepository;
 
 @Service
+@Transactional
 public class PessoaService {
 
 	@Autowired
