@@ -1,4 +1,4 @@
-package solucao.servies;
+package solucao.services;
 
 import java.util.List;
 
@@ -19,22 +19,22 @@ public class EnderecoService {
 	private EnderecoRepository repository;
 
 	@Autowired
-	private PessoaService pessoaService;
+	private PessoaEnderecoShared shared;
 
 	public PessoaEnderecos novo(Integer pessoa, Endereco model) {
-		Pessoa findPessoa = this.pessoaService.findById(pessoa);
-		if (findPessoa != null) {		
+		Pessoa findPessoa = this.shared.findById(pessoa);
+		if (findPessoa != null) {
 			model.setPessoaId(findPessoa);
-			this.repository.save(model);			
+			this.repository.save(model);
 			return this.findAll(pessoa);
 		}
 		return null;
 	}
 
 	public PessoaEnderecos editar_endereco_principal(Integer id) {
-		Endereco endereco = this.findById(id);	
+		Endereco endereco = this.findById(id);
 		if (endereco != null) {
-			endereco.setEnderecoPrincipal(!endereco.isEnderecoPrincipal());			
+			endereco.setEnderecoPrincipal(!endereco.isEnderecoPrincipal());
 			return this.findAll(endereco.getPessoaId().getId());
 		}
 		return null;
@@ -49,13 +49,7 @@ public class EnderecoService {
 	}
 
 	public PessoaEnderecos findAll(Integer pessoa) {
-		PessoaEnderecos pessoaEnderecos = new PessoaEnderecos();
-		pessoaEnderecos.setPessoa(this.pessoaService.findById(pessoa));
-		if (pessoaEnderecos.getPessoa() != null) {
-			pessoaEnderecos.setEnderecos(this.repository.findByPessoaId(pessoaEnderecos.getPessoa()));
-			return pessoaEnderecos;
-		}
-		return null;
+		return this.shared.findAll(pessoa);
 	}
 
 }

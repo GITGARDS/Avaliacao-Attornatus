@@ -2,7 +2,6 @@ package solucao.models.utils;
 
 import java.util.List;
 
-import solucao.models.Endereco;
 import solucao.models.Pessoa;
 import solucao.models.dtos.EnderecoDto;
 

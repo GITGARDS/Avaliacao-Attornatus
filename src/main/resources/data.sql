@@ -1,19 +1,21 @@
+create schema Attornatus;
+use Attornatus;
 create table pessoa(
-	id			identity	not null,
-	nome			varchar		not null unique,
-	data_de_nascimento	timestamp 	with time zone not null,
-	primary key		(id)
+	id					int				not null auto_increment,
+	nome				varchar(100)	not null unique,
+	data_de_nascimento	timestamp,
+	primary key			(id)
 );
 
 create table endereco(
-	id			identity	not null,
-	pessoa_id		int		not null,
-	logradouro		varchar		not null,
-	cep			char(8),
-	numero			numeric,
-	cidade			varchar		not null,
-	endereco_principal	boolean		default false,
-	primary key		(id),
+	id					int				not null auto_increment,
+	pessoa_id			int				not null,
+	logradouro			varchar(100)	not null,
+	cep					char(8),
+	numero				numeric,
+	cidade				varchar(100)	not null,
+	endereco_principal	boolean			default false,
+	primary key			(id),
 
 	constraint uk_endereco_pessoa_id_id unique (pessoa_id, id),
 

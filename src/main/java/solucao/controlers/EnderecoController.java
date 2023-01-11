@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import solucao.models.Endereco;
 import solucao.models.utils.PessoaEnderecos;
-import solucao.servies.EnderecoService;
+import solucao.services.EnderecoService;
 
 @RestController
 @RequestMapping(value = "/api/endereco")

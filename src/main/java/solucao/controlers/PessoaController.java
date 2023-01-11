@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import solucao.models.Pessoa;
-import solucao.servies.PessoaService;
+import solucao.models.utils.PessoaEnderecos;
+import solucao.services.PessoaService;
 
 @RestController
 @RequestMapping(value = "/api/pessoa")
@@ -24,8 +25,8 @@ public class PessoaController {
 	private PessoaService pessoaService;
 
 	@PostMapping(value = "/criar-uma-pessoa")
-	private ResponseEntity<Pessoa> novo(@RequestBody Pessoa body) {
-		Pessoa resp = this.pessoaService.novo(body);
+	private ResponseEntity<PessoaEnderecos> novo(@RequestBody Pessoa body) {
+		PessoaEnderecos resp = this.pessoaService.novo(body);
 		if (resp == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}
@@ -33,8 +34,8 @@ public class PessoaController {
 	}
 
 	@PutMapping(value = "/editar-uma-pessoa")
-	private ResponseEntity<Pessoa> editar(@RequestBody Pessoa body) {
-		Pessoa resp = this.pessoaService.editar(body);
+	private ResponseEntity<PessoaEnderecos> editar(@RequestBody Pessoa body) {
+		PessoaEnderecos resp = this.pessoaService.editar(body);
 		if (resp == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}
@@ -42,8 +43,8 @@ public class PessoaController {
 	}
 
 	@GetMapping(value = "/consultar-uma-pessoa/{id}")
-	private ResponseEntity<Pessoa> findByIdr(@PathVariable Integer id) {
-		Pessoa resp = this.pessoaService.findById(id);
+	private ResponseEntity<PessoaEnderecos> findByIdr(@PathVariable Integer id) {
+		PessoaEnderecos resp = this.pessoaService.findById(id);
 		if (resp == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}
@@ -51,8 +52,8 @@ public class PessoaController {
 	}
 
 	@GetMapping(value = "/listar-pessoas")
-	private ResponseEntity<List<Pessoa>> findAll() {
-		List<Pessoa> resp = this.pessoaService.findAll();
+	private ResponseEntity<List<PessoaEnderecos>> findAll() {
+		List<PessoaEnderecos> resp = this.pessoaService.findAll();
 		if (resp == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}
