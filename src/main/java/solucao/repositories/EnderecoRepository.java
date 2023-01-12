@@ -8,7 +8,7 @@ import solucao.models.Endereco;
 import solucao.models.Pessoa;
 import solucao.models.dtos.EnderecoDto;
 
-public interface EnderecoRepository extends JpaRepository<Endereco, Integer> {
+public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 
 	List<EnderecoDto> findByPessoaId(Pessoa findPessoa);
 

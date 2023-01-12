@@ -1,4 +1,4 @@
-package solucao.services;
+package solucao.services.shared;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +19,11 @@ public class PessoaEnderecoShared {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 
-	public Pessoa findById(Integer id) {
+	public Pessoa findById(Long id) {
 		return this.pessoaRepository.findById(id).orElse(null);
 	}
 
-	public PessoaEnderecos findAll(Integer pessoa) {
+	public PessoaEnderecos findAll(long pessoa) {
 		PessoaEnderecos pessoaEnderecos = new PessoaEnderecos();
 		pessoaEnderecos.setPessoa(this.pessoaRepository.findById(pessoa).orElse(null));
 		if (pessoaEnderecos.getPessoa() != null) {

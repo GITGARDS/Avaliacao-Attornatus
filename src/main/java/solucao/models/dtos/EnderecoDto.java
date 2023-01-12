@@ -1,8 +1,10 @@
 package solucao.models.dtos;
 
+import java.util.Objects;
+
 public class EnderecoDto {
 
-	private Integer id;
+	private Long id;
 
 	private String logradouro;
 
@@ -14,7 +16,7 @@ public class EnderecoDto {
 
 	private boolean enderecoPrincipal;
 
-	public EnderecoDto(Integer id, String logradouro, String cep, Integer numero, String cidade,
+	public EnderecoDto(Long id, String logradouro, String cep, Integer numero, String cidade,
 			boolean enderecoPrincipal) {
 		super();
 		this.id = id;
@@ -25,11 +27,11 @@ public class EnderecoDto {
 		this.enderecoPrincipal = enderecoPrincipal;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -71,6 +73,23 @@ public class EnderecoDto {
 
 	public void setEnderecoPrincipal(boolean enderecoPrincipal) {
 		this.enderecoPrincipal = enderecoPrincipal;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EnderecoDto other = (EnderecoDto) obj;
+		return Objects.equals(id, other.id);
 	}
 
 	@Override

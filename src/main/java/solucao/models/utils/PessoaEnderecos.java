@@ -11,6 +11,7 @@ public class PessoaEnderecos {
 	private List<EnderecoDto> enderecos;
 
 	public PessoaEnderecos() {
+		super();
 		this.pessoa = null;
 		this.enderecos = null;
 	}

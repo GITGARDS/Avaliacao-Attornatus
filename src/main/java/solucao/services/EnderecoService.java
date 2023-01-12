@@ -10,9 +10,9 @@ import solucao.models.Endereco;
 import solucao.models.Pessoa;
 import solucao.models.utils.PessoaEnderecos;
 import solucao.repositories.EnderecoRepository;
+import solucao.services.shared.PessoaEnderecoShared;
 
 @Service
-@Transactional
 public class EnderecoService {
 
 	@Autowired
@@ -21,7 +21,8 @@ public class EnderecoService {
 	@Autowired
 	private PessoaEnderecoShared shared;
 
-	public PessoaEnderecos novo(Integer pessoa, Endereco model) {
+	@Transactional	
+	public PessoaEnderecos novo(long pessoa, Endereco model) {
 		Pessoa findPessoa = this.shared.findById(pessoa);
 		if (findPessoa != null) {
 			model.setPessoaId(findPessoa);
@@ -31,7 +32,8 @@ public class EnderecoService {
 		return null;
 	}
 
-	public PessoaEnderecos editar_endereco_principal(Integer id) {
+	@Transactional	
+	public PessoaEnderecos editarEnderecoPrincipal(Long id) {
 		Endereco endereco = this.findById(id);
 		if (endereco != null) {
 			endereco.setEnderecoPrincipal(!endereco.isEnderecoPrincipal());
@@ -39,8 +41,9 @@ public class EnderecoService {
 		}
 		return null;
 	}
-
-	public Endereco findById(Integer id) {
+	
+	@Transactional
+	public Endereco findById(Long id) {
 		return this.repository.findById(id).orElse(null);
 	}
 
@@ -48,7 +51,7 @@ public class EnderecoService {
 		return this.repository.findAll();
 	}
 
-	public PessoaEnderecos findAll(Integer pessoa) {
+	public PessoaEnderecos findAll(Long pessoa) {
 		return this.shared.findAll(pessoa);
 	}
 

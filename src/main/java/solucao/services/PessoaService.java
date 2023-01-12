@@ -10,9 +10,9 @@ import jakarta.transaction.Transactional;
 import solucao.models.Pessoa;
 import solucao.models.utils.PessoaEnderecos;
 import solucao.repositories.PessoaRepository;
+import solucao.services.shared.PessoaEnderecoShared;
 
 @Service
-@Transactional
 public class PessoaService {
 
 	@Autowired
@@ -21,6 +21,7 @@ public class PessoaService {
 	@Autowired
 	private PessoaEnderecoShared shared;
 
+	@Transactional
 	public PessoaEnderecos novo(Pessoa model) {
 		Pessoa pessoa = this.pessoaRepository.save(model);
 		if (pessoa != null) {
@@ -29,6 +30,7 @@ public class PessoaService {
 		return null;
 	}
 
+	@Transactional
 	public PessoaEnderecos editar(Pessoa model) {
 		PessoaEnderecos findPessoa = this.findById(model.getId());
 		if (findPessoa != null) {
@@ -48,7 +50,8 @@ public class PessoaService {
 		return enderecos;
 	}
 
-	public PessoaEnderecos findById(Integer id) {
+	@Transactional
+	public PessoaEnderecos findById(Long id) {
 		Pessoa findPessoa = this.shared.findById(id);
 		if (findPessoa != null) {
 			return this.findAll(id);
@@ -57,7 +60,7 @@ public class PessoaService {
 
 	}
 
-	public PessoaEnderecos findAll(Integer pessoa) {
+	public PessoaEnderecos findAll(Long pessoa) {
 		return this.shared.findAll(pessoa);
 	}
 
