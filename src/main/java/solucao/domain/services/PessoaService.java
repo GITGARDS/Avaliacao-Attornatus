@@ -1,26 +1,25 @@
-package solucao.services;
+package solucao.domain.services;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import solucao.dtos.PessoaEnderecos;
+import lombok.RequiredArgsConstructor;
+import solucao.api.dtos.PessoaEnderecos;
+import solucao.domain.models.Pessoa;
+import solucao.domain.repository.PessoaRepository;
+import solucao.domain.services.shared.PessoaEnderecoShared;
 import solucao.exceptions.ApplicationNotFoundException;
-import solucao.models.Pessoa;
-import solucao.repositories.PessoaRepository;
-import solucao.services.shared.PessoaEnderecoShared;
 
 @Service
+@RequiredArgsConstructor
 public class PessoaService {
 
-	@Autowired
-	private PessoaRepository pessoaRepository;
+	private final PessoaRepository pessoaRepository;
 
-	@Autowired
-	private PessoaEnderecoShared shared;
+	private final PessoaEnderecoShared shared;
 
 	@Transactional
 	public PessoaEnderecos novo(Pessoa model) throws ApplicationNotFoundException {

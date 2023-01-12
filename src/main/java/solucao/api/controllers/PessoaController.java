@@ -1,8 +1,7 @@
-package solucao.controlers;
+package solucao.api.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,17 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import solucao.dtos.PessoaEnderecos;
+import lombok.RequiredArgsConstructor;
+import solucao.api.dtos.PessoaEnderecos;
+import solucao.domain.models.Pessoa;
+import solucao.domain.services.PessoaService;
 import solucao.exceptions.ApplicationNotFoundException;
-import solucao.models.Pessoa;
-import solucao.services.PessoaService;
 
+@RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/v1/pessoa")
+@RequestMapping(value = "/api/pessoa")
 public class PessoaController {
 
-	@Autowired
-	private PessoaService pessoaService;
+	private final PessoaService pessoaService;
 
 	@PostMapping
 	public ResponseEntity<PessoaEnderecos> criarUmaPessoa(@Valid @RequestBody Pessoa body)

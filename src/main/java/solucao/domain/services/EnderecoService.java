@@ -1,26 +1,25 @@
-package solucao.services;
+package solucao.domain.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import solucao.dtos.PessoaEnderecos;
+import lombok.RequiredArgsConstructor;
+import solucao.api.dtos.PessoaEnderecos;
+import solucao.domain.models.Endereco;
+import solucao.domain.models.Pessoa;
+import solucao.domain.repository.EnderecoRepository;
+import solucao.domain.services.shared.PessoaEnderecoShared;
 import solucao.exceptions.ApplicationNotFoundException;
-import solucao.models.Endereco;
-import solucao.models.Pessoa;
-import solucao.repositories.EnderecoRepository;
-import solucao.services.shared.PessoaEnderecoShared;
 
 @Service
+@RequiredArgsConstructor
 public class EnderecoService {
 
-	@Autowired
-	private EnderecoRepository repository;
+	private final EnderecoRepository repository;
 
-	@Autowired
-	private PessoaEnderecoShared shared;
+	private final PessoaEnderecoShared shared;
 
 	@Transactional
 	public PessoaEnderecos novo(long pessoa, Endereco model) throws ApplicationNotFoundException {
@@ -58,16 +57,16 @@ public class EnderecoService {
 			return resp;
 		}
 		throw new ApplicationNotFoundException("Nehum registro encontrado");
-		
+
 	}
 
 	public PessoaEnderecos findAll(Long pessoa) throws ApplicationNotFoundException {
-		PessoaEnderecos resp =this.shared.findAll(pessoa);
+		PessoaEnderecos resp = this.shared.findAll(pessoa);
 		if (resp != null) {
 			return resp;
 		}
 		throw new ApplicationNotFoundException("Nehum registro encontrado: " + pessoa);
-		
+
 	}
 
 }
