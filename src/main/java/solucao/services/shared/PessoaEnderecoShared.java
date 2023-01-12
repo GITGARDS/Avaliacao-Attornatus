@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import solucao.dtos.PessoaEnderecos;
 import solucao.models.Pessoa;
-import solucao.models.utils.PessoaEnderecos;
 import solucao.repositories.EnderecoRepository;
 import solucao.repositories.PessoaRepository;
 

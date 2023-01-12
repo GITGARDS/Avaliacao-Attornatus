@@ -1,4 +1,4 @@
-package solucao.models.dtos;
+package solucao.dtos;
 
 import java.util.Objects;
 

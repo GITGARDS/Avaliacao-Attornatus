@@ -21,7 +21,7 @@ public class Endereco {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "pessoa_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(foreignKeyDefinition = "fk_endereco_pessoa_id"))
+	@JoinColumn(name = "pessoa_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_pessoa_id"))
 	private Pessoa pessoaId;
 
 	@Column(nullable = false)

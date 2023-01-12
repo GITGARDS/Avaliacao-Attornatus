@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import solucao.dtos.PessoaEnderecos;
+import solucao.exceptions.ApplicationNotFoundException;
 import solucao.models.Pessoa;
-import solucao.models.utils.PessoaEnderecos;
 import solucao.repositories.PessoaRepository;
 import solucao.services.shared.PessoaEnderecoShared;
 
@@ -22,46 +23,56 @@ public class PessoaService {
 	private PessoaEnderecoShared shared;
 
 	@Transactional
-	public PessoaEnderecos novo(Pessoa model) {
-		Pessoa pessoa = this.pessoaRepository.save(model);
-		if (pessoa != null) {
-			return this.findAll(pessoa.getId());
+	public PessoaEnderecos novo(Pessoa model) throws ApplicationNotFoundException {
+		PessoaEnderecos pessoaEnderecos = new PessoaEnderecos();
+		pessoaEnderecos.setPessoa(this.pessoaRepository.save(model));
+		if (pessoaEnderecos.getPessoa() != null) {
+			return this.findAll(pessoaEnderecos.getPessoa().getId());
 		}
-		return null;
+		throw new ApplicationNotFoundException("Erro ao tentar adicionar Registro!");
 	}
 
 	@Transactional
-	public PessoaEnderecos editar(Pessoa model) {
+	public PessoaEnderecos editar(Pessoa model) throws ApplicationNotFoundException {
 		PessoaEnderecos findPessoa = this.findById(model.getId());
 		if (findPessoa != null) {
 			this.pessoaRepository.save(model);
 			return this.findAll(model.getId());
 		}
-		return null;
+		throw new ApplicationNotFoundException("Erro ao tentar editar Registro!");
 	}
 
-	public List<PessoaEnderecos> findAll() {
+	public List<PessoaEnderecos> findAll() throws ApplicationNotFoundException {
 		List<Pessoa> listaPessoas = this.pessoaRepository.findAll();
 		List<PessoaEnderecos> enderecos = new ArrayList<>();
 		for (Pessoa pessoa : listaPessoas) {
 			PessoaEnderecos endereco = this.findAll(pessoa.getId());
 			enderecos.add(endereco);
 		}
-		return enderecos;
+		if (enderecos.size() > 0) {
+			return enderecos;
+		}
+		throw new ApplicationNotFoundException("Nehum registro encontrado");
+
 	}
 
 	@Transactional
-	public PessoaEnderecos findById(Long id) {
+	public PessoaEnderecos findById(Long id) throws ApplicationNotFoundException {
 		Pessoa findPessoa = this.shared.findById(id);
 		if (findPessoa != null) {
 			return this.findAll(id);
 		}
-		return null;
+		throw new ApplicationNotFoundException("Erro ao tentar localizar Registro: " + id);
 
 	}
 
-	public PessoaEnderecos findAll(Long pessoa) {
-		return this.shared.findAll(pessoa);
+	public PessoaEnderecos findAll(Long pessoa) throws ApplicationNotFoundException {
+		PessoaEnderecos pessoaEnderecos = this.shared.findAll(pessoa);
+		if (pessoaEnderecos != null) {
+			return pessoaEnderecos;
+		}
+		throw new ApplicationNotFoundException("Erro ao tentar localizar Registro: " + pessoa);
+
 	}
 
 }

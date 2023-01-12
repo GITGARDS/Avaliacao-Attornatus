@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
 @Entity(name = "pessoa")
@@ -28,7 +27,7 @@ public class Pessoa {
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "data_de_nascimento", nullable = false)
-	@PastOrPresent(message = "Campo de data de nascimento esta inválida")	
+	
 	private LocalDate dataDeNascimento;
 
 	public Long getId() {

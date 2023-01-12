@@ -1,9 +1,8 @@
-package solucao.models.utils;
+package solucao.dtos;
 
 import java.util.List;
 
 import solucao.models.Pessoa;
-import solucao.models.dtos.EnderecoDto;
 
 public class PessoaEnderecos {
 
