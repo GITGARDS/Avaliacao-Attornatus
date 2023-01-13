@@ -11,9 +11,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "pessoa")
 public class Pessoa {
 
@@ -22,14 +26,13 @@ public class Pessoa {
 	private Long id;
 
 	@Column(unique = true, nullable = false)
-	@NotBlank(message = "Valor não pode ser nulo ou vazio")	
-	@Size(min = 8, max = 100, message = "Campo nome deve ter entre 9 e 100 caracteres")	
+	@NotBlank(message = "Valor não pode ser nulo ou vazio")
+	@Size(min = 3, max = 100, message = "Campo nome deve ter de 3 a 100 caracteres")
 	private String nome;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "data_de_nascimento", nullable = false)
-	
-	private LocalDate dataDeNascimento;
 
+	private LocalDate dataDeNascimento;
 
 }

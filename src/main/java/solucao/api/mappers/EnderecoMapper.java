@@ -6,22 +6,24 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
-import solucao.api.dtos.EnderecoDto;
+import solucao.domain.dtos.EnderecoDto;
 import solucao.domain.models.Endereco;
 
 @Component
-@AllArgsConstructor
 public class EnderecoMapper {
 
 	public List<EnderecoDto> listToListDto(List<Endereco> enderecos) {
-		return enderecos.stream().filter(Objects::nonNull).map(this::enderecoToEnderecoDto)
-				.collect(Collectors.toList());
+		List<EnderecoDto> lista = enderecos.stream().filter(Objects::nonNull).map(this::enderecoToEnderecoDto)
+				.filter(obj -> obj.isEnderecoPrincipal() == true).collect(Collectors.toList());
+		if (lista.size() == 0) {
+			lista.add(new EnderecoDto(null, null, null, null, null, null, false));
+		}
+		return lista;
 	}
 
 	public EnderecoDto enderecoToEnderecoDto(Endereco endereco) {
-		return new EnderecoDto(endereco.getId(), endereco.getLogradouro(), endereco.getCep(), endereco.getNumero(),
-				endereco.getCidade(), endereco.isEnderecoPrincipal());
+		return new EnderecoDto(endereco.getId(), null, endereco.getLogradouro(), endereco.getCep(),
+				endereco.getNumero(), endereco.getCidade(), endereco.isEnderecoPrincipal());
 	}
 
 	public List<Endereco> listDtoToList(List<EnderecoDto> enderecosDto) {

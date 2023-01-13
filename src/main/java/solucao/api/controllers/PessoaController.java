@@ -2,6 +2,7 @@ package solucao.api.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,35 +14,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import solucao.api.dtos.PessoaEnderecos;
+import solucao.domain.dtos.PessoaEnderecos;
 import solucao.domain.models.Pessoa;
 import solucao.domain.services.PessoaService;
-import solucao.exceptions.ApplicationNotFoundException;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/pessoa")
 public class PessoaController {
 
-	private final PessoaService pessoaService;
+	@Autowired
+	private PessoaService pessoaService;
 
 	@PostMapping
-	public ResponseEntity<PessoaEnderecos> criarUmaPessoa(@Valid @RequestBody Pessoa body)
-			throws ApplicationNotFoundException {
+	public ResponseEntity<PessoaEnderecos> criarUmaPessoa(@Valid @RequestBody Pessoa body) {
 		PessoaEnderecos resp = this.pessoaService.novo(body);
 		return ResponseEntity.ok(resp);
 	}
 
 	@PutMapping
-	public ResponseEntity<PessoaEnderecos> editarUmaPessoa(@Valid @RequestBody Pessoa body)
-			throws ApplicationNotFoundException {
+	public ResponseEntity<PessoaEnderecos> editarUmaPessoa(@Valid @RequestBody Pessoa body) {
 		PessoaEnderecos resp = this.pessoaService.editar(body);
 		return ResponseEntity.ok(resp);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<PessoaEnderecos>> listarPessoas() throws ApplicationNotFoundException {
+	public ResponseEntity<List<PessoaEnderecos>> listarPessoas() {
 		List<PessoaEnderecos> resp = this.pessoaService.findAll();
 		if (resp == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -50,7 +47,7 @@ public class PessoaController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<PessoaEnderecos> consultarUmaPessoa(@PathVariable Long id) throws ApplicationNotFoundException {
+	public ResponseEntity<PessoaEnderecos> consultarUmaPessoa(@PathVariable Long id) {
 		PessoaEnderecos resp = this.pessoaService.findById(id);
 		return ResponseEntity.ok(resp);
 	}

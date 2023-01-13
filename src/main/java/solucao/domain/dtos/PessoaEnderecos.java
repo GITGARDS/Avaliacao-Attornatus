@@ -1,4 +1,4 @@
-package solucao.api.dtos;
+package solucao.domain.dtos;
 
 import java.util.List;
 
@@ -16,4 +16,5 @@ public class PessoaEnderecos {
 		this.pessoa = null;
 		this.enderecos = null;
 	}
+
 }

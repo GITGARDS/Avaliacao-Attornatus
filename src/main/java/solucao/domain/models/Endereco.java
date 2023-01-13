@@ -10,9 +10,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "endereco")
 public class Endereco {
 
@@ -26,7 +30,7 @@ public class Endereco {
 
 	@Column(nullable = false)
 	@NotBlank(message = "Valor não pode ser nulo ou vazio")
-	@Size(min = 8, max = 100, message = "Campo logradouro deve ter entre 9 e 100 caracteres")
+	@Size(min = 3, max = 100, message = "Campo logradouro deve ter de 3 a 100 caracteres")
 	private String logradouro;
 
 	@Column(length = 8)
@@ -35,7 +39,7 @@ public class Endereco {
 
 	private Integer numero;
 
-	@Size(min = 8, max = 100, message = "Campo cidade deve ter entre 9 e 100 caracteres")
+	@Size(min = 3, max = 100, message = "Campo cidade deve ter de 3 a 100 caracteres")
 	private String cidade;
 
 	@Column(name = "endereco_principal")

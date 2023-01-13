@@ -2,14 +2,15 @@ package solucao.domain.services.shared;
 
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-import solucao.api.dtos.PessoaEnderecos;
+import lombok.AllArgsConstructor;
 import solucao.api.mappers.EnderecoMapper;
+import solucao.domain.dtos.PessoaEnderecos;
 import solucao.domain.models.Pessoa;
 import solucao.domain.repository.EnderecoRepository;
 import solucao.domain.repository.PessoaRepository;
+import solucao.domain.services.exceptions.ObjectNotFoundException;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class PessoaEnderecoShared {
 
@@ -20,7 +21,8 @@ public class PessoaEnderecoShared {
 	private final EnderecoMapper enderecoMapper;
 
 	public Pessoa findById(Long id) {
-		return this.pessoaRepository.findById(id).orElse(null);
+		return this.pessoaRepository.findById(id)
+				.orElseThrow(() -> new ObjectNotFoundException("Registro nao encontrado: " + id));
 	}
 
 	public PessoaEnderecos findAll(long pessoa) {
