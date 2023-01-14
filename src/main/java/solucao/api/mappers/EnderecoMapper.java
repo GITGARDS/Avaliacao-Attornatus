@@ -13,8 +13,10 @@ import solucao.domain.models.Endereco;
 public class EnderecoMapper {
 
 	public List<EnderecoDto> listToListDto(List<Endereco> enderecos) {
-		List<EnderecoDto> lista = enderecos.stream().filter(Objects::nonNull).map(this::enderecoToEnderecoDto)
-				.filter(obj -> obj.isEnderecoPrincipal() == true).collect(Collectors.toList());
+		List<EnderecoDto> lista = enderecos.stream()
+				.filter(Objects::nonNull).map(this::enderecoToEnderecoDto)
+				.filter(obj -> obj.isEnderecoPrincipal() == true)
+				.collect(Collectors.toList());
 		if (lista.size() == 0) {
 			lista.add(new EnderecoDto(null, null, null, null, null, null, false));
 		}

@@ -8,9 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import solucao.domain.dtos.PessoaEnderecos;
 import solucao.domain.models.Endereco;
-import solucao.domain.models.Pessoa;
 import solucao.domain.repository.EnderecoRepository;
-import solucao.domain.services.shared.PessoaEnderecoShared;
 
 @AllArgsConstructor
 @Service
@@ -18,17 +16,17 @@ public class EnderecoService {
 
 	private final EnderecoRepository repository;
 
-	private final PessoaEnderecoShared shared;
+	private final PessoaService pessoaService;
 
 	@Transactional
 	public PessoaEnderecos novo(long pessoa, Endereco model) {
-		Pessoa findPessoa = this.shared.findById(pessoa);
-		if (findPessoa != null) {
-			model.setPessoaId(findPessoa);
+		PessoaEnderecos findPessoa = this.pessoaService.findById(pessoa);
+		if (findPessoa.getPessoa() != null) {
+			model.setPessoaId(findPessoa.getPessoa());
 			this.repository.save(model);
 			return this.findAll(pessoa);
 		}
-		return null;
+		return findPessoa;
 	}
 
 	@Transactional
@@ -47,7 +45,7 @@ public class EnderecoService {
 		if (resp != null) {
 			return resp;
 		}
-		return null;
+		return resp;
 	}
 
 	public List<Endereco> findAll() {
@@ -55,17 +53,15 @@ public class EnderecoService {
 		if (resp != null) {
 			return resp;
 		}
-		return null;
-
+		return resp;
 	}
 
 	public PessoaEnderecos findAll(Long pessoa) {
-		PessoaEnderecos resp = this.shared.findAll(pessoa);
+		PessoaEnderecos resp = this.pessoaService.findAll(pessoa);
 		if (resp != null) {
 			return resp;
 		}
-		return null;
-
+		return resp;
 	}
 
 }
