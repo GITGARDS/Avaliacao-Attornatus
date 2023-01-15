@@ -10,9 +10,7 @@ import solucao.domain.models.Pessoa;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EnderecoDto {
-
-	private Long id;
+public class EnderecoRequest {
 
 	@JsonIgnore
 	private Pessoa pessoaId;

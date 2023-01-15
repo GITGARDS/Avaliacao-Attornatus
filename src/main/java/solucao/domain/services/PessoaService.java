@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import solucao.api.exceptions.ApplicationNotFoundException;
 import solucao.api.mappers.EnderecoMapper;
 import solucao.domain.dtos.PessoaEnderecos;
 import solucao.domain.models.Pessoa;
@@ -25,7 +26,7 @@ public class PessoaService {
 	private final EnderecoMapper enderecoMapper;
 
 	@Transactional
-	public PessoaEnderecos novo(Pessoa model) {
+	public PessoaEnderecos novo(Pessoa model) throws ApplicationNotFoundException {
 		findByName(model);
 
 		PessoaEnderecos pessoaEnderecos = new PessoaEnderecos();
@@ -34,21 +35,22 @@ public class PessoaService {
 		if (pessoaEnderecos.getPessoa() != null) {
 			return this.findAll(pessoaEnderecos.getPessoa().getId());
 		}
-		return pessoaEnderecos;
+		throw new ApplicationNotFoundException("A operação incluir foi cancelada!");
 	}
 
 	@Transactional
-	public PessoaEnderecos editar(Pessoa model) {
+	public PessoaEnderecos editar(Pessoa model) throws ApplicationNotFoundException {
 		findByName(model);
 		PessoaEnderecos findPessoa = this.findById(model.getId());
 		if (findPessoa != null) {
 			this.pessoaRepository.save(model);
 			return this.findAll(model.getId());
 		}
-		return findPessoa;
+		throw new ApplicationNotFoundException(
+				"A operação editar foi cancelada, registro: " + model.getId() + ", nao encontrado!");
 	}
 
-	public List<PessoaEnderecos> findAll() {
+	public List<PessoaEnderecos> findAll() throws ApplicationNotFoundException {
 		List<Pessoa> listaPessoas = this.pessoaRepository.findAll();
 		List<PessoaEnderecos> enderecos = new ArrayList<>();
 		for (Pessoa pessoa : listaPessoas) {
@@ -58,21 +60,21 @@ public class PessoaService {
 		if (enderecos.size() > 0) {
 			return enderecos;
 		}
-		return enderecos;
+		throw new ApplicationNotFoundException("Nenhum registro encontrado!");
 
 	}
 
 	@Transactional
-	public PessoaEnderecos findById(Long id) {
-		Pessoa findPessoa = this.pessoaRepository.findById(id)
-				.orElseThrow(() -> new ObjectNotFoundException("Registro nao encontrado: " + id));
+	public PessoaEnderecos findById(Long id) throws ApplicationNotFoundException {
+		Pessoa findPessoa = this.pessoaRepository.findById(id).orElse(null);
 		if (findPessoa != null) {
 			return this.findAll(id);
 		}
-		return null;
+		throw new ApplicationNotFoundException(
+				"Registro: " + id + ", nao encontrado!");
 	}
 
-	public PessoaEnderecos findAll(Long pessoa) {
+	public PessoaEnderecos findAll(Long pessoa) throws ApplicationNotFoundException {
 		PessoaEnderecos pessoaEnderecos = new PessoaEnderecos();
 		pessoaEnderecos.setPessoa(this.pessoaRepository.findById(pessoa).orElse(null));
 		if (pessoaEnderecos.getPessoa() != null) {
@@ -80,7 +82,8 @@ public class PessoaService {
 					.listToListDto(this.enderecoRepository.findByPessoaId(pessoaEnderecos.getPessoa())));
 			return pessoaEnderecos;
 		}
-		return pessoaEnderecos;
+		throw new ApplicationNotFoundException(
+				"A operação foi cancelada, pessoa: " + pessoa + ", nao encontrado!");
 	}
 
 	private void findByName(Pessoa obj) {

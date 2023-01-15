@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import solucao.api.exceptions.ApplicationNotFoundException;
 import solucao.domain.dtos.PessoaEnderecos;
 import solucao.domain.models.Pessoa;
 import solucao.domain.services.PessoaService;
@@ -26,19 +27,21 @@ public class PessoaController {
 	private PessoaService pessoaService;
 
 	@PostMapping
-	public ResponseEntity<PessoaEnderecos> criarUmaPessoa(@Valid @RequestBody Pessoa body) {
+	public ResponseEntity<PessoaEnderecos> criarUmaPessoa(@Valid @RequestBody Pessoa body)
+			throws ApplicationNotFoundException {
 		PessoaEnderecos resp = this.pessoaService.novo(body);
 		return ResponseEntity.ok(resp);
 	}
 
 	@PutMapping
-	public ResponseEntity<PessoaEnderecos> editarUmaPessoa(@Valid @RequestBody Pessoa body) {
+	public ResponseEntity<PessoaEnderecos> editarUmaPessoa(@Valid @RequestBody Pessoa body)
+			throws ApplicationNotFoundException {
 		PessoaEnderecos resp = this.pessoaService.editar(body);
 		return ResponseEntity.ok(resp);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<PessoaEnderecos>> listarPessoas() {
+	public ResponseEntity<List<PessoaEnderecos>> listarPessoas() throws ApplicationNotFoundException {
 		List<PessoaEnderecos> resp = this.pessoaService.findAll();
 		if (resp == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -47,7 +50,8 @@ public class PessoaController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<PessoaEnderecos> consultarUmaPessoa(@PathVariable Long id) {
+	public ResponseEntity<PessoaEnderecos> consultarUmaPessoa(@PathVariable Long id)
+			throws ApplicationNotFoundException {
 		PessoaEnderecos resp = this.pessoaService.findById(id);
 		return ResponseEntity.ok(resp);
 	}

@@ -9,7 +9,7 @@ import solucao.domain.models.Pessoa;
 public class PessoaEnderecos {
 
 	private Pessoa pessoa;
-	private List<EnderecoDto> enderecos;
+	private List<EnderecoRequest> enderecos;
 
 	public PessoaEnderecos() {
 		super();

@@ -16,8 +16,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "pessoa")
 public class Pessoa {
 
@@ -25,14 +25,12 @@ public class Pessoa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(unique = true, nullable = false)
 	@NotBlank(message = "Valor não pode ser nulo ou vazio")
 	@Size(min = 3, max = 100, message = "Campo nome deve ter de 3 a 100 caracteres")
+	@Column(unique = true, nullable = false)
 	private String nome;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "data_de_nascimento", nullable = false)
-
 	private LocalDate dataDeNascimento;
-
 }
