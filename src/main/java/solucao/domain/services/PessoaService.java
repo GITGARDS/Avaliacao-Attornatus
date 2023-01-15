@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import solucao.api.exceptions.ApplicationNotFoundException;
 import solucao.api.mappers.EnderecoMapper;
 import solucao.domain.dtos.PessoaEnderecos;
@@ -15,15 +15,16 @@ import solucao.domain.models.Pessoa;
 import solucao.domain.repository.EnderecoRepository;
 import solucao.domain.repository.PessoaRepository;
 import solucao.domain.services.exceptions.DataIntegratyViolationException;
-import solucao.domain.services.exceptions.ObjectNotFoundException;
 
-@AllArgsConstructor
 @Service
 public class PessoaService {
 
-	private final PessoaRepository pessoaRepository;
-	private final EnderecoRepository enderecoRepository;
-	private final EnderecoMapper enderecoMapper;
+	@Autowired
+	private PessoaRepository pessoaRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private EnderecoMapper enderecoMapper;
 
 	@Transactional
 	public PessoaEnderecos novo(Pessoa model) throws ApplicationNotFoundException {

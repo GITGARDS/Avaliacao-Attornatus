@@ -2,22 +2,23 @@ package solucao.domain.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import solucao.api.exceptions.ApplicationNotFoundException;
 import solucao.domain.dtos.PessoaEnderecos;
 import solucao.domain.models.Endereco;
 import solucao.domain.repository.EnderecoRepository;
 
-@AllArgsConstructor
 @Service
 public class EnderecoService {
 
-	private final EnderecoRepository repository;
+	@Autowired
+	private EnderecoRepository repository;
 
-	private final PessoaService pessoaService;
+	@Autowired
+	private PessoaService pessoaService;
 
 	@Transactional
 	public PessoaEnderecos novo(long pessoa, Endereco model) throws ApplicationNotFoundException {

@@ -3,7 +3,6 @@ package solucao.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,9 +42,6 @@ public class PessoaController {
 	@GetMapping
 	public ResponseEntity<List<PessoaEnderecos>> listarPessoas() throws ApplicationNotFoundException {
 		List<PessoaEnderecos> resp = this.pessoaService.findAll();
-		if (resp == null) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-		}
 		return ResponseEntity.ok(resp);
 	}
 

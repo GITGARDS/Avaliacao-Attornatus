@@ -3,7 +3,6 @@ package solucao.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,9 +35,6 @@ public class EnderecoController {
 	@GetMapping
 	public ResponseEntity<List<Endereco>> findAll() throws ApplicationNotFoundException {
 		List<Endereco> resp = this.enderecoService.findAll();
-		if (resp == null) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-		}
 		return ResponseEntity.ok(resp);
 	}
 
@@ -46,9 +42,6 @@ public class EnderecoController {
 	public ResponseEntity<PessoaEnderecos> listarEnderecosDaPessoa(@PathVariable Long id)
 			throws ApplicationNotFoundException {
 		PessoaEnderecos resp = this.enderecoService.findAll(id);
-		if (resp == null) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-		}
 		return ResponseEntity.ok(resp);
 	}
 
