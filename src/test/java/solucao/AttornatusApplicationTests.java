@@ -7,8 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class AttornatusApplicationTests {
 
 	@Test
-	void main() {
-		AttornatusApplication.main(new String[] {});
-
+	void contextLoads() {
 	}
+
 }

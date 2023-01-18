@@ -1,4 +1,4 @@
-package solucao.api.exceptions;
+package solucao.exceptions;
 
 public class ApplicationNotFoundException extends Exception {
 

@@ -1,4 +1,4 @@
-package solucao.api.advice;
+package solucao.advice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import solucao.api.exceptions.ApplicationNotFoundException;
+import solucao.exceptions.ApplicationNotFoundException;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
